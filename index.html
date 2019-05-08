@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <title>Whatsapp Link Generator</title>
+  
+  <!-- Uncomment for developing purposes 
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  -->
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+</head>
+<body>
+  <nav class="navbar has-shadow is-spaced is-primary">
+    <div class="container">
+      <div class="navbar-brand">
+        <span class="navbar-item">
+          <h1>Whatsapp Link Creator</h1>
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <div id="app">
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-half has-shadow">
+            <h2>Phone numbers <small>(one by line)</small></h2>
+            <textarea class="textarea" placeholder="Phone numbers" v-model="phoneNumbersTextarea"></textarea>
+
+            <div class="field has-addons">
+              <p class="control">
+                <a class="button is-static is-small">
+                  Prefix
+                </a>
+              </p>
+              <p class="control">
+                <input class="input is-small" type="text" placeholder="00" v-model="prefix">
+              </p>
+            </div>
+
+            <small>{{ phoneNumbers }}</small>
+          </div>
+          <div class="column is-half has-shadow">
+            <h2>Message</h2>
+            <textarea class="textarea" placeholder="Message" v-model="messageTextarea"></textarea>
+            <a href="#" @click="showModal" class="is-pulled-right" title="Help">Help &#129335;</a>
+
+
+            <h2>Message Preview</h2>
+            <p v-html="parsedMessage"></p>
+
+            <div class="modal" :class="{'is-active':helpModal}">
+              <div class="modal-background" @click="hideModal"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">Whatsapp text formatting help</p>
+                  <button class="delete" aria-label="close" @click="hideModal"></button>
+                </header>
+                <section class="modal-card-body">
+                  <h3 class="is-size-3">Italic</h3>
+                  <p>To <i>italicize</i> your message, place an underscore on both sides of the text, like so:</p>
+                  <code>_text_</code>
+                  <br>
+                  <h3 class="is-size-3">Bold</h3>
+                  <p>To <b>bold</b> your message, place an asterisk on both sides of the text, like so:</p>
+                  <code>*text*</code>
+                  <br>
+                  <h3 class="is-size-3">Strikethrough</h3>
+                  <p>To <s>strikethrough</s> your message, place a tilde on both sides of the text, like so:</p>
+                  <code>~text~</code>
+                </section>
+              </div>
+              <!--<button class="modal-close is-large" aria-label="close"></button>-->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <ul>
+          <li v-for="link in links" style="margin:0.5em; display: inline-block;">
+            <a :href="link.link" class="button is-link" target="blank" @click="buttonClicked">Send to {{ link.number }}</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <a href="https://bulma.io">
+        <img src="https://bulma.io/images/made-with-bulma.png" alt="Made with Bulma" width="128" height="24">
+      </a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
